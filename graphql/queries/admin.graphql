@@ -1,0 +1,38 @@
+type StatisticResponse {
+    placesCount: Int
+    usersCount: Int
+    reserves: ReservesCounter
+    dynamic: [DynamicItem]
+}
+
+type DynamicItem {
+    y: Int
+    name: String
+}
+
+type ReservesCounter {
+    successedReserves: Int
+    canceledReservers: Int
+    successedDeliveries: Int
+    canceledDeliveries: Int
+}
+
+extend type Query @middleware(checks: ["auth:api", "admin"]) {
+    checkAdmin: Boolean @field(resolver: "AdminQuery@checkAdmin")
+    getStatisticData: StatisticResponse
+        @field(resolver: "AdminQuery@getStatisticData")
+    getPlacesList(request: InputSearch): PlaceItems
+        @field(resolver: "PlaceQuery@getPlacesList")
+    getUsersList(request: InputSearch): UserItems
+        @field(resolver: "AccountQuery@getUsersList")
+    getUserById(id: Int!): User @field(resolver: "AccountQuery@getUserById")
+}
+
+extend type Mutation @middleware(checks: ["auth:api", "admin"]) {
+    userHandler(id: Int!, user_data: UserData!): UserResponse
+        @field(resolver: "AdminMutator@userHandler")
+    placeStatusHandler(id: Int!, status: Boolean!): MessageResponse
+        @field(resolver: "AdminMutator@placeStatusHandler")
+    placeRemoveHandler(id: Int!): MessageResponse
+        @field(resolver: "AdminMutator@placeRemoveHandler")
+}

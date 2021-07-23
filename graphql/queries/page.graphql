@@ -1,0 +1,11 @@
+type Page{
+    id: ID
+    slug: String
+    title: String
+    content: String
+    meta: Meta
+}
+
+extend type Query{
+    getStaticPageBySlug( slug: String!): Page @field( resolver: "PageQuery@getStaticPageBySlug")
+}

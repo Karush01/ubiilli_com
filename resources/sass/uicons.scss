@@ -1,0 +1,140 @@
+.u-icon-bell {
+    background-image: url('../images/icons/bell.svg')
+}
+
+.u-icon-food {
+    background-image: url('../images/icons/food.svg')
+}
+
+.u-icon-pack {
+    background-image: url('../images/icons/pack.svg')
+}
+
+.u-icon-reviews {
+    background-image: url('../images/icons/reviews.svg')
+}
+
+.u-icon-account-circle {
+    background-image: url('../images/icons/account_circle.svg')
+}
+
+.u-icon-thank-you {
+    background-image: url('../images/icons/thank-you.svg')
+}
+
+.u-icon-basket {
+    background-image: url('../images/icons/basket.svg')
+}
+
+.u-icon-service {
+    background-image: url('../images/icons/service.svg')
+}
+
+.u-icon-tea {
+    background-image: url('../images/icons/tea.svg')
+}
+
+.u-icon-dinner {
+    background-image: url('../images/icons/dinner.svg')
+}
+
+.u-icon-dinner-1 {
+    background-image: url('../images/icons/dinner1.svg')
+}
+
+.u-icon-facebook {
+    background-image: url('../images/icons/facebook.svg?p=1')
+}
+
+.u-icon-instagram {
+    background-image: url('../images/icons/instagram.svg')
+}
+
+.u-icon-twitter {
+    background-image: url('../images/icons/twitter.svg')
+}
+
+.u-icon-faq {
+    background-image: url('../images/icons/faq.svg')
+}
+
+.u-icon-not-found {
+    background-image: url('../images/icons/not-found.svg')
+}
+
+
+.u-icon-contacts {
+    background-image: url('../images/icons/contacts.svg')
+}
+
+.u-icon-about-us {
+    background-image: url('../images/icons/about-us.svg')
+}
+
+.u-icon-empty-zoom {
+    background-image: url('../images/icons/empty-zoom.svg')
+}
+
+.u-icon-furniture {
+    background-image: url('../images/icons/furniture.svg')
+}
+
+.u-icon-empty-active {
+    background-image: url('../images/icons/empty-active-order.svg')
+}
+
+.u-icon-chef {
+    background-image: url('../images/icons/chef.svg')
+}
+
+.u-icon-success {
+    background-image: url('../images/icons/success.svg')
+}
+
+.u-icon-error {
+    background-image: url('../images/icons/error.svg')
+}
+
+
+.u-social-icon {
+    width: 22px;
+    height: 22px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: 0;
+}
+
+.u-icon {
+    width: 75px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.u-icon-md {
+    width: 7em;
+    height: 7em;
+}
+
+.u-icon-lg {
+    width: 15em;
+    height: 15em;
+}
+
+.u-icon-big {
+    width: 10em;
+    height: 10em;
+}
+
+.transition-icon {
+    .u-icon {
+        transition: .2s ease-in-out;
+    }
+
+    &:hover .u-icon {
+        transform: translateY(8px);
+    }
+}

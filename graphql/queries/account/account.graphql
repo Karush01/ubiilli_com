@@ -1,0 +1,195 @@
+"""
+Повертає статус і повідомлення при успішному виході
+"""
+type LogoutResponse {
+    status: Boolean!
+    message: String
+}
+
+"""
+Повертає статус і повідомлення при успішному збереженні даних
+"""
+type updateResponse {
+    status: Boolean!
+    message: String
+    user: User!
+}
+
+"""
+Повертає статус і повідомлення при успішній заміні паролю
+"""
+type updatePasswordResponse {
+    status: Boolean!
+    message: String
+}
+
+type Order {
+    id: ID!
+    name: String!
+    phone: String!
+    persons: Int
+    date: String
+    time: String
+    address: String
+    comment: String
+    place: Place
+    reserveDate: String
+    smokers: Boolean
+    delivery: Boolean
+    paid: Boolean
+    confirmed: Boolean
+    items: [Item!]
+}
+
+type Item {
+    id: ID!
+    name: String!
+    price: Float!
+    quantity: Int!
+}
+
+type PlaceDataResponse {
+    status: Boolean!
+    message: String
+    slug: String!
+}
+
+type IbanResponse {
+    status: Boolean!
+    message: String
+}
+
+"""
+Повертає назву створеного файла
+"""
+type FileName {
+    filename: String
+}
+
+type BalancesResponse {
+    amount: Float
+    withdraw: Float
+    iban: String
+}
+
+"""
+Масив параметрів для обновлення інформації
+"""
+input updateInfo {
+    first_name: String
+    last_name: String
+    email: String
+    phone: String
+}
+
+"""
+Масив параметрів для обновлення пароль
+"""
+input updatePasswordInfo {
+    old_password: String
+    new_password: String
+}
+
+"""
+Дата і час для активного замовлення
+"""
+input ActiveOrderData {
+    time: String!
+    date: String!
+}
+
+"""
+Дані щоб вставити в базу
+"""
+input PlaceDataHandler {
+    place: PlaceInputData
+    kitchens: [Int]
+    pictures: [PlacePicture]
+    options: [Int]
+    place_schedule: [PlaceScheduleInput]
+}
+
+input PlacePicture {
+    name: String
+    isCover: Boolean
+}
+
+input PlaceScheduleInput {
+    day_id: Int
+    open: String
+    close: String
+    active: Boolean
+}
+
+input PlaceMenuInput {
+    id: ID
+    name: String
+    description: String
+    price: Float
+    menu_category_id: Int
+}
+
+input PlaceMenuData {
+    place_id: String
+    menu: PlaceMenuInput
+}
+
+input PlaceInputData {
+    id: String
+    name: String
+    description: String
+    type_id: Int
+    phone: String
+    delivery: Boolean
+    middle_price: String
+    tables_count: String
+    tables_seats: String
+    city_id: Int
+    address: String
+    zip: String
+    latitude: Float
+    longitude: Float
+}
+
+"""
+Методи для роботи з кабінетом юзера
+"""
+type Mutation @middleware(checks: ["auth:api", "active_account"]) {
+    updateInformation(update_info: updateInfo): updateResponse!
+        @field(resolver: "AccountMutator@updateInformation")
+    updatePassword(
+        update_password: updatePasswordInfo
+    ): updatePasswordResponse! @field(resolver: "AccountMutator@updatePassword")
+    createIban(iban: String): IbanResponse
+        @field(resolver: "AccountMutator@createIban")
+    uploadFile(file: Upload!): FileName
+        @field(resolver: "AccountMutator@uploadFile")
+    confirmOrderStatus(id: Int!): MessageResponse!
+        @field(resolver: "AccountMutator@confirmOrderStatus")
+    cancelOrderStatus(id: Int!): MessageResponse!
+        @field(resolver: "AccountMutator@cancelOrderStatus")
+    placeHandler(place_data: PlaceDataHandler!): PlaceDataResponse
+        @field(resolver: "AccountMutator@placeHandler")
+    placeHandlerMenu(menu_data: PlaceMenuData): PlaceDataResponse
+        @field(resolver: "AccountMutator@placeHandlerMenu")
+    placeRemoveMenu(menu_data: PlaceMenuData): PlaceDataResponse
+        @field(resolver: "AccountMutator@placeRemoveMenu")
+    sendToKitchen(active_order: ActiveOrderData): MessageResponse
+        @field(resolver: "AccountMutator@sendToKitchen")
+    logout: LogoutResponse! @field(resolver: "AccountMutator@logout")
+}
+
+type Query @middleware(checks: ["auth:api", "active_account"]) {
+    checkAccount: Boolean @field(resolver: "AccountQuery@checkAccount")
+    getUserPlaces: [Place] @field(resolver: "AccountQuery@getUserPlaces")
+    getOrdersHistory(delivery: Boolean!): [Order]!
+        @field(resolver: "AccountQuery@getOrdersHistory")
+    getPlaceOrdersHistory(
+        skip: Int
+        active: Boolean
+        delivery: Boolean
+    ): [Order]! @field(resolver: "AccountQuery@getPlaceOrdersHistory")
+    getActiveOrder(active_order: ActiveOrderData): Order
+        @field(resolver: "AccountQuery@activeOrder")
+    getBalance: BalancesResponse @field(resolver: "AccountQuery@getBalance")
+}

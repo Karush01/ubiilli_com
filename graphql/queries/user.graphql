@@ -1,0 +1,59 @@
+"""
+Екземпляр юзера
+"""
+type User{
+    id: ID!
+    first_name: String!
+    last_name: String!
+    email: String!
+    phone: String
+    active: Boolean!
+    user_type_id: Int
+    registerDate: String
+    created_at: DateTime
+    updated_at: DateTime
+    userType: UserType
+    success_orders_count: Int
+    places: [Place]
+    iban: UserBank
+}
+type UserResponse{
+    status: Boolean
+    message: String
+}
+
+type UserBank{
+    id: ID
+    iban: String
+    verified: Boolean
+}
+type UserType{
+    id: ID
+    name: String
+}
+
+type UserItems{
+    items: [User],
+    itemsCount:  ItemsInfo
+}
+
+
+input UserData{
+    first_name: String
+    last_name: String
+    phone: String
+    email: String
+    active: Boolean
+    iban: IbanInput
+}
+
+input IbanInput{
+    id: ID
+    verified: Boolean
+    iban: String
+}
+
+#import  account/account.graphql
+#import  account/auth.graphql
+
+

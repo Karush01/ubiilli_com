@@ -1,0 +1,13 @@
+extend type Query {
+    getMetaTags(slug: String): Meta  @field( resolver: "MetaQuery@getMetaTags")
+}
+
+"""
+Екземпляр мета-тега
+"""
+type Meta {
+    title: String
+    description: String
+    keywords: String
+}
+

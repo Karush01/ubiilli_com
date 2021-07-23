@@ -1,0 +1,27 @@
+extend type Mutation @middleware(checks: ["auth:api", "active_account"]){
+    createOrder( order: OrderData): OrderResponse @field(resolver: "OrderMutator@createOrder")
+    checkPayment( sessionId: String ): ResponsePayment  @field(resolver: "OrderMutator@checkPayment")
+}
+
+type ResponsePayment {
+    status: Boolean
+}
+
+type OrderResponse{
+    status: Boolean
+    token: String
+}
+
+input OrderData {
+    name: String
+    phone: String
+    persons: Int
+    place_id: Int!
+    comment: String
+    address: String
+    time: String
+    date: String
+    delivery: Boolean!
+    smokers: Boolean,
+    items: [Int!]
+}

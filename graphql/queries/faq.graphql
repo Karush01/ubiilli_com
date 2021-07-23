@@ -1,0 +1,12 @@
+extend type Query {
+    getFaqs: [Faq] @field( resolver: "FaqQuery@getFaqs")
+}
+
+"""
+Екземпляр FAQ
+"""
+type Faq {
+    id: ID!
+    question: String!
+    answer: String!
+}

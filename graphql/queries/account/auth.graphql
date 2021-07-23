@@ -1,0 +1,39 @@
+input LoginInput {
+    email: String
+    password: String
+}
+
+input RegisterInput {
+    first_name: String
+    last_name: String
+    phone: String
+    company_number: String
+    email: String
+    password: String
+    google_token: String
+    user_type: Int
+}
+
+input SocialLoginInput {
+    provider: String
+    token: String
+    user_type: Int
+}
+
+"""
+Повертає токен і юзера
+"""
+
+type AuthPayload {
+    access_token: String!
+    message: String!
+    user: User!
+}
+
+
+
+extend type Mutation{
+    login( signin: LoginInput): AuthPayload @field(resolver: "AuthMutator@login"),
+    socialLogin( social: SocialLoginInput): AuthPayload @field(resolver: "AuthMutator@socialLogin"),
+    createUser(signup: RegisterInput): AuthPayload @field(resolver: "AuthMutator@createUser"),
+}

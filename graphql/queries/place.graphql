@@ -1,0 +1,180 @@
+extend type Query {
+    getRecommendedPlaces: [Place] @field(   resolver: "PlaceQuery@getRecommendedPlaces" ),
+    searchPlaces(request: SearchRequest): SearchResponse @field( resolver: "PlaceQuery@searchPlaces"),
+    getCityPlaces( cityId: Int): [Place] @field( resolver: "PlaceQuery@getCityPlaces" ),
+    getPlaceSchedule(  slug: String!, date: String! ): [String!] @field( resolver: "PlaceQuery@getPlaceSchedule"),
+    getKitchens: [Kitchen] @field( resolver: "PlaceQuery@getKitchensList"),
+    getTypes: [PlaceType] @field( resolver: "PlaceQuery@getTypesList"),
+    getDays: [Day] @field( resolver: "PlaceQuery@getDaysList"),
+    getOptions: [Option] @field(  resolver: "PlaceQuery@getOptionsList"),
+    getMenuCategories: [MenuCategory] @field(  resolver: "PlaceQuery@getMenuCategories"),
+    getPlace( slug: String!): Place @field( resolver: "PlaceQuery@index"),
+    getPlaceDishes( ids: [Int]): [Dishe] @field(resolver: "PlaceQuery@getPlaceDishes"),
+}
+"""
+Екземпляр ресторану
+"""
+type Place {
+    id: ID!
+    name: String!
+    slug:String!
+    hashedUrl: String
+    description: String!
+    address: String!
+    rating: Float!
+    placeType: PlaceType!
+    city: City!
+    city_id: Int
+    type_id: Int
+    picture: Picture!
+    picture_id: Int
+    pictures: [Place_picture]
+    zip: String!
+    latitude: Float!
+    longitude: Float!
+    phone: String!
+    todaySchedule: Schedule
+    delivery: Boolean!
+    middle_price: Float!
+    distance: Float!
+    placeKitchens: [PlaceKitchen!]
+    placeOptions: [PlaceOptions!]
+    schedules: [Schedule]
+    tables_count: Int!
+    tables_seats: Int!
+    dishes: [Dishe]
+    dishesFormatted: [[Dishe]]
+    status: Boolean
+    user: Owner
+}
+
+type Owner{
+    id: ID!
+    first_name: String!
+    last_name: String!
+}
+
+type Dishe{
+    id: ID!
+    name: String!
+    description: String
+    weight: Int
+    price: Float!
+    menuCategory: MenuCategory
+}
+
+type MenuCategory{
+    id: ID!
+    slug: String!
+    description: MenuCategoryDescription
+}
+
+type MenuCategoryDescription{
+    id: ID!
+    name: String!
+}
+
+type Place_picture{
+    id: ID!
+    picture: Picture
+}
+
+type SearchResponse{
+    itemsCount: ItemsInfo
+    items: [Place]
+}
+
+type ItemsInfo{
+    itemsCount: Int!
+    currentPage: Int!
+    total: Int!
+}
+
+type Schedule {
+    id: ID!
+    open: String!
+    close: String!
+    active: Boolean!
+    day_id: Int
+    day: Day
+}
+
+type PlaceOptions{
+    id: ID!
+    option: Option!
+}
+
+type OptionDescription{
+    id: ID
+    name: String!
+}
+
+type PlaceKitchen{
+    id: ID!
+    kitchen: Kitchen!
+}
+
+type Kitchen{
+    id: Int!
+    slug: String!
+    description: KitchenDescription!
+}
+
+type KitchenDescription{
+    id: ID
+    name: String!
+}
+
+type Day{
+    id: ID!
+    slug: String!
+    description: DayDescription!
+}
+
+type DayDescription{
+    id: ID
+    name: String!
+}
+
+type Option{
+    id: Int!
+    slug: String!
+    description: KitchenDescription!
+}
+
+type PlaceType {
+    id: ID!
+    slug: String!
+    description: PlaceTypeDescription!
+}
+
+type PlaceTypeDescription{
+    id: ID!
+    name: String!
+}
+
+type PlaceItems{
+    items: [Place],
+    itemsCount:  ItemsInfo
+}
+
+"""
+Запит для пошуку
+"""
+
+input SearchRequest {
+    cityId: Int
+    q: String
+    delivery: Boolean
+    geo: Geolocation
+    sort: String
+    page: Int
+    kitchens: [Int]
+    types: [Int]
+    options: [Int]
+}
+
+input Geolocation{
+    latitude: Float
+    longitude: Float
+}

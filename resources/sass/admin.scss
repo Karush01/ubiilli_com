@@ -1,0 +1,89 @@
+@import "~antd/dist/antd.min.css";
+@import "~bootstrap/scss/bootstrap";
+
+.ant-menu-item > a {
+    display: initial;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.ant-menu-item .anticon + a,
+.ant-menu-submenu-title .anticon + a {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+        width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+        width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.ant-menu-inline-collapsed > .ant-menu-item .anticon + a {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+}
+
+.anticon {
+    vertical-align: 0.125em;
+}
+
+.card-item {
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+        0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cursor-default {
+    cursor: default !important;
+}
+.has-color {
+    color: $white !important;
+    border: transparent !important;
+
+    &:hover {
+        color: $white !important;
+    }
+
+    &.status-block {
+        background-color: rgb(255, 127, 0);
+    }
+
+    &.status-active {
+        background-color: rgb(90, 175, 53);
+    }
+}
+
+.ant-drawer-header,
+.drawer-footer {
+    position: absolute;
+    width: 100%;
+    background: $white;
+    z-index: 999;
+}
+
+.drawer-footer {
+    bottom: 0;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 16px;
+    text-align: right;
+    left: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.badge-in-moderation sup {
+    height: 15px !important;
+    padding: 0 6px !important;
+    font-size: 9px !important;
+    line-height: 15px !important;
+    background: orangered;
+}
+
+.hidden-badge sup {
+    display: none;
+}
+
+.mh-100 {
+    min-height: 100vh;
+}
